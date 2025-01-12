@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hachiko"
+dynamic = ["version"]
+description = "Asyncio wrapper around watchdog."
+readme = "README.txt"
+requires-python = ">=3.11"
+license-files = { paths = ["LICENSE.txt"] }
+keywords = []
+authors = [
+    { name = "John Biesnecker", email = "jbiesnecker@gmail.com" },
+    { name = "Tuomo Kriikkula", email = "tuokri@tuta.io" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+
+dependencies = [
+    "watchdog==6.0.0",
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "hachiko/version.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
