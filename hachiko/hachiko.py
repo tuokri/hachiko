@@ -1,4 +1,6 @@
 import asyncio
+
+from watchdog.events import FileSystemEvent
 from watchdog.observers import Observer
 
 EVENT_TYPE_MOVED = "moved"
@@ -12,7 +14,7 @@ EVENT_TYPE_OPENED = "opened"
 class AIOEventHandler(object):
     """An asyncio-compatible event handler."""
 
-    def __init__(self, loop=None):
+    def __init__(self, loop: asyncio.AbstractEventLoop | None = None):
         self._loop = loop or asyncio.get_event_loop()
         # prefer asyncio.create_task starting from Python 3.7
         if hasattr(asyncio, "create_task"):
@@ -28,29 +30,28 @@ class AIOEventHandler(object):
             EVENT_TYPE_OPENED: self.on_opened,
         }
 
-    async def on_any_event(self, event):
+    async def on_any_event(self, event: FileSystemEvent):
         pass
 
-    async def on_moved(self, event):
+    async def on_moved(self, event: FileSystemEvent):
         pass
 
-    async def on_created(self, event):
+    async def on_created(self, event: FileSystemEvent):
         pass
 
-    async def on_deleted(self, event):
+    async def on_deleted(self, event: FileSystemEvent):
         pass
 
-    async def on_modified(self, event):
+    async def on_modified(self, event: FileSystemEvent):
         pass
 
-    async def on_closed(self, event):
+    async def on_closed(self, event: FileSystemEvent):
         pass
 
-    async def on_opened(self, event):
+    async def on_opened(self, event: FileSystemEvent):
         pass
 
-
-    def dispatch(self, event):
+    def dispatch(self, event: FileSystemEvent):
         handler = self._method_map[event.event_type]
         self._loop.call_soon_threadsafe(self._ensure_future, self.on_any_event(event))
         self._loop.call_soon_threadsafe(self._ensure_future, handler(event))
@@ -65,7 +66,7 @@ class AIOWatchdog(object):
 
         evh = event_handler or AIOEventHandler()
 
-        self._observer.schedule(evh, path, recursive)
+        self._observer.schedule(evh, path, recursive=recursive)
 
     def start(self):
         self._observer.start()
