@@ -20,3 +20,6 @@ __pycache__/
 pyvenv.cfg
 pip-selfcheck.json
 .vscode
+
+# Hatch generated
+hachiko/version.py
