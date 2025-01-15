@@ -37,7 +37,11 @@ version-file = "hachiko/version.py"
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-artifacts = "hachiko/version.py"
+artifacts = [
+    "hachiko/version.py"
+]
 
 [tool.hatch.build.targets.sdist]
-artifacts = "hachiko/version.py"
+artifacts = [
+    "hachiko/version.py"
+]
